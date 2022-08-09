@@ -1,5 +1,6 @@
 // Main UI For people that are logged in
 
+import 'package:bottom_bar_with_sheet/bottom_bar_with_sheet.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +8,11 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:flutter/src/foundation/key.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mynotes/views/addnewnote.dart';
 import 'package:mynotes/views/loginview.dart';
+import 'package:mynotes/views/viewnote.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({Key? key}) : super(key: key);
@@ -19,12 +22,35 @@ class NotesView extends StatefulWidget {
 }
 
 class _NotesViewState extends State<NotesView> {
+  late final BottomBarWithSheetController _bottomBarController;
+  late final TextEditingController _searchController;
+
+  @override
+  void initState() {
+    _bottomBarController = BottomBarWithSheetController(initialIndex: 0);
+    _searchController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AppBar Demo'),
+        title: Text(
+          'MyNotes',
+          // Apply google fonts
+          style: GoogleFonts.sacramento(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.add_box),
@@ -32,8 +58,7 @@ class _NotesViewState extends State<NotesView> {
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('This is a snackbar')));
-              Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/addnote/', (route) => false);
+              Navigator.pushNamed(context, '/addnote/');
             },
           ),
           PopupMenuButton<String>(
@@ -41,6 +66,7 @@ class _NotesViewState extends State<NotesView> {
               setState(() {});
             },
             itemBuilder: (BuildContext context) {
+              // Creates the rightmost hamburger menu
               return {'Logout', 'Settings'}.map((String choice) {
                 return PopupMenuItem<String>(
                     value: choice,
@@ -92,7 +118,6 @@ class _NotesViewState extends State<NotesView> {
       body: Center(
         child: Column(
           children: [
-            const Text("Your Notes"),
             // Get all notes from firebase
             StreamBuilder<QuerySnapshot>(
               stream: FirebaseFirestore.instance
@@ -101,7 +126,15 @@ class _NotesViewState extends State<NotesView> {
                   .snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (!snapshot.hasData) return const Text('Loading...');
+                if (!snapshot.hasData)
+                  // ignore: curly_braces_in_flow_control_structures
+                  return // A spinner from flutter_spinkit
+                      const Center(
+                    child: SpinKitThreeInOut(
+                      color: Colors.blue,
+                      size: 50.0,
+                    ),
+                  );
                 return Expanded(
                   child: ListView(
                     children:
@@ -110,26 +143,36 @@ class _NotesViewState extends State<NotesView> {
                         padding: const EdgeInsets.all(8.0),
                         child: ListTile(
                           title: Text(document['title'],
+                            textAlign: TextAlign.center,
                               style: GoogleFonts.sacramento(
-                                fontSize: 40,
+                                fontSize: 30,
                               )),
-                          onTap: () => Navigator.pushNamed(context, "/viewnote/"
-                              // Start the view mode for the note
-                              ),
-                          subtitle: Text(document['content']),
+                          onTap: () {
+                            NoteToBeShown.content = document[
+                                'content']; // Static variable inside ViewNote
+                            NoteToBeShown.title = document['title'];
+                            Navigator.pushNamed(context, '/viewnote/');
+                          },
+                          // subtitle: Text(document['content'],textAlign: TextAlign.center,
+                          //     style: GoogleFonts.sacramento(
+                          //       fontSize: 20,
+                          //     )),
                           trailing: Wrap(
                             spacing: 12, // space between two icons
                             children: <IconButton>[
                               IconButton(
                                 icon: const Icon(Icons.edit),
-                                onPressed:
-                                    () => null // Show the addnewnote page with arguments
-                                        // Navigator.push(
-                                        //     context, MaterialPageRoute(builder: (context) => AddNewNote(title: document['title'], content: document['content'])),
-                                        // ),
-      
+                                onPressed: () {
+                                  // Show the addnewnote page with arguments
+                                  NoteToBeShown.title = document['title'];
+                                  NoteToBeShown.content = document[
+                                      'content']; // Static variable inside ViewNote
+                                  Navigator.pushNamed(context, '/editnote/');
+                                },
                               ),
-                              // icon-1
+
+                              // Delete the note (from the database)
+                              // TODO: Move the note to the trash! We need to create a trash collection
                               IconButton(
                                 icon: const Icon(Icons.delete),
                                 onPressed: () => // Delete the note
@@ -152,6 +195,7 @@ class _NotesViewState extends State<NotesView> {
           ],
         ),
       ),
+
       // Drawer for the app
       drawer: Drawer(
         child: ListView(
@@ -199,6 +243,19 @@ class _NotesViewState extends State<NotesView> {
             ),
           ],
         ),
+      ),
+
+      // Bottom drawer
+      bottomNavigationBar: BottomBarWithSheet(
+        controller: _bottomBarController,
+        bottomBarTheme: const BottomBarTheme(
+          decoration: BoxDecoration(color: Color.fromARGB(255, 230, 17, 17)),
+          itemIconColor: Colors.grey,
+        ),
+        items: const [
+          BottomBarWithSheetItem(icon: Icons.people),
+          BottomBarWithSheetItem(icon: Icons.favorite),
+        ],
       ),
     );
   }

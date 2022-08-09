@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:mynotes/views/addnewnote.dart';
+import 'package:mynotes/views/editnote.dart';
 
 import 'package:mynotes/views/loginview.dart';
 import 'package:mynotes/views/notesview.dart';
@@ -24,8 +25,10 @@ void main() {
       '/register/': (context) => const RegisterView(),
       '/verifyemail/': (context) => const VerifyEmailView(),
       '/notes/': (context) => const NotesView(),
-      // '/viewnote/': (context) => const ViewNote(),
+
       '/addnote/': (context) => const AddNewNote(),
+      '/viewnote/': (context) => const ViewNote(),
+      '/editnote/': (context) => const EditNote(),
     },
   ));
 }

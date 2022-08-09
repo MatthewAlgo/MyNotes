@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mynotes/views/loginview.dart';
 
+import '../custom/textfields.dart';
 import '../firebase_options.dart';
 import '../net/firebase.dart';
 
@@ -35,30 +37,26 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Register'),
+          title: Text('Register - MyNotes',style: GoogleFonts.sacramento(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  fontStyle: FontStyle.normal,
+                ),),
         ),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              TextField(
-                controller: _email,
-                enableSuggestions: false,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your email here',
-                ),
-              ),
-              TextField(
-                controller: _password,
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-                decoration: const InputDecoration(
-                  hintText: 'Enter your password here',
-                ),
-              ),
+              Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: buildCustomTextField(context, 'Email', _email, 'Enter your email here',false, false, TextInputType.emailAddress, false),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: buildCustomTextField(context, 'Password', _password, 'Enter your password here',false, false, TextInputType.visiblePassword, true),
+            ),
               TextButton(
                   onPressed: () async {
                     // Get user name and password

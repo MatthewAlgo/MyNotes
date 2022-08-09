@@ -45,6 +45,10 @@ dependencies:
   shared_preferences: any
   google_fonts: any
 
+  # Custom styles
+  bottom_bar_with_sheet: ^2.4.0
+  flutter_spinkit: ^5.1.0
+
 
 dev_dependencies:
   flutter_test:

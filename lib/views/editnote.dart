@@ -1,18 +1,21 @@
+// Edit note view
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mynotes/custom/textfields.dart';
+import 'package:mynotes/views/viewnote.dart';
 
 import '../net/firebase.dart';
 
 // ignore: must_be_immutable
-class AddNewNote extends StatefulWidget {
-  const AddNewNote({Key? key}) : super(key: key);
+class EditNote extends StatefulWidget {
+  const EditNote({Key? key}) : super(key: key);
 
   @override
-  State<AddNewNote> createState() => _AddNewNoteState();
+  State<EditNote> createState() => _EditNoteState();
 }
 
 // Create a class that holds a note
@@ -22,14 +25,14 @@ class Note {
   Note({required this.title, required this.content});
 }
 
-class _AddNewNoteState extends State<AddNewNote> {
+class _EditNoteState extends State<EditNote> {
   late final TextEditingController _title;
   late final TextEditingController _content;
 
   @override
   void initState() {
-    _title = TextEditingController();
-    _content = TextEditingController();
+    _title = TextEditingController(text: NoteToBeShown.title);
+    _content = TextEditingController(text: NoteToBeShown.content);
     super.initState();
   }
 
@@ -44,23 +47,18 @@ class _AddNewNoteState extends State<AddNewNote> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add a New Note', style: GoogleFonts.sacramento(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w700,
-                  fontStyle: FontStyle.normal,
-                ),),
-      ),
+          title: Text(
+        'Edit Note',
+        style: GoogleFonts.sacramento(
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+        ),
+      )),
       body: Center(
           child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Row(
-              // ignore: prefer_const_literals_to_create_immutables
-              children: [
-                const Text('Note title'),
-              ],
-            ),
             // Create an input field for the title
             Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -77,12 +75,7 @@ class _AddNewNoteState extends State<AddNewNote> {
                     fontWeight: FontWeight.bold,
                   ),
                 )),
-            Row(
-              // ignore: prefer_const_literals_to_create_immutables
-              children: [
-                const Text('Note content'),
-              ],
-            ),
+
             // Create an input field for the content
             Padding(
                 padding: EdgeInsets.all(8.0),
@@ -98,31 +91,29 @@ class _AddNewNoteState extends State<AddNewNote> {
                     fontSize: 25,
                   ),
                 )),
-            Column(
-              children: [
-                TextButton(
-                    onPressed: () async {
-                      // Create a new note
-                      final note = Note(
-                        title: _title.text,
-                        content: _content.text,
-                      );
-                      
-                      // Get the email of the firebase user
-                      final user = FirebaseAuth.instance.currentUser;
-                      addNote(user!.email.toString(), note.title, note.content);
-                      
-                      // Navigate back to the list of notes
-                      Navigator.pushNamed(context, '/');
-                    },
-                    child: const Text('Add Note')),
-                TextButton(
-                    onPressed: () {
-                      // Navigate to the list of notes
-                      Navigator.pushNamed(context, '/');
-                    },
-                    child: const Text('Cancel')),
-              ],
+
+            RaisedButton(
+              child: const Text('Save'),
+              onPressed: () {
+                final user = FirebaseAuth.instance.currentUser;
+
+                // Deletes the past document and saves the new one
+                FirebaseFirestore.instance
+                    .doc("users/${user!.email.toString()}")
+                    .collection("notes")
+                    .doc(NoteToBeShown.title)
+                    .delete();
+
+                // Save the note
+                final note = Note(
+                  title: _title.text,
+                  content: _content.text,
+                );
+                addNote(user.email.toString(), note.title, note.content);
+
+                // Save the modified note to the database
+                Navigator.pop(context);
+              },
             ),
           ],
         ),
