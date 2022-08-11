@@ -109,7 +109,7 @@ class _EditNoteState extends State<EditNote> {
                   title: _title.text,
                   content: _content.text,
                 );
-                addNote(user.email.toString(), note.title, note.content);
+                addNote(user.email.toString(), note.title, note.content, context);
 
                 // Save the modified note to the database
                 Navigator.pop(context);

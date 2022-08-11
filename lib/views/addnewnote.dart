@@ -110,7 +110,7 @@ class _AddNewNoteState extends State<AddNewNote> {
                       
                       // Get the email of the firebase user
                       final user = FirebaseAuth.instance.currentUser;
-                      addNote(user!.email.toString(), note.title, note.content);
+                      addNote(user!.email.toString(), note.title, note.content, context);
                       
                       // Navigate back to the list of notes
                       Navigator.pushNamed(context, '/');

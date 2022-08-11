@@ -48,6 +48,7 @@ dependencies:
   # Custom styles
   bottom_bar_with_sheet: ^2.4.0
   flutter_spinkit: ^5.1.0
+  # webcrypto: ^0.5.2 # Crypto library 
 
 
 dev_dependencies:

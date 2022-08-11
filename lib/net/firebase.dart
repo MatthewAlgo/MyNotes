@@ -91,12 +91,86 @@ Future<Iterable<Map<String, dynamic>>> getUserNotes(String? email) async {
 }
 
 // Add a note to the database
-Future<void> addNote(String? email, String? title, String? content) async {
+Future<void> addNote(
+    String? email, String? title, String? content, BuildContext context) async {
   CollectionReference notes = FirebaseFirestore.instance.collection('users');
-  Future<void> addNote() {
+  Future<void> addNote() async {
     // Call the user's CollectionReference to add a new user
     // Add a document with the title of title
+    if (title != null && title != "") {
+      return await notes
+          .doc(email)
+          .collection('notes')
+          .doc(title)
+          .set({
+            'title': title, // John Doe
+            'content': content, // Stokes and Sons
+          })
+          .then((value) => print("Note Added"))
+          .catchError((error) => print("Failed to add note: $error"));
+    } else {
+      // Show snackbar
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('You cannot add a note with no title'),
+      ));
+    }
+  }
+
+  return addNote();
+}
+
+// Move a note to trash
+Future<void> moveNoteToTrash(
+    String? email, String? title, String? content, BuildContext context) async {
+  CollectionReference notes = FirebaseFirestore.instance.collection('users');
+  Future<void> moveNoteToTrash() {
+    // Call the user's CollectionReference to add a new user
+    // Add a document with the title of title
+    notes
+        .doc(email)
+        .collection('trash')
+        .doc(title)
+        .set({
+          'title': title, // John Doe
+          'content': content, // Stokes and Sons
+        })
+        .then((value) => print("Note Added to trash"))
+        .catchError((error) => print("Failed to move note to trash: $error"));
+    // We need to delete the note from the notes list
+
     return notes
+        .doc(email)
+        .collection('notes')
+        .doc(title)
+        .delete()
+        .then((value) => // Show a snackbar
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text("Note moved to trash"),
+            )))
+        .catchError((error) => print("Failed to delete note: $error"));
+  }
+
+  try {
+    return moveNoteToTrash();
+  } catch (e) {
+    // Show a snackbar
+    // ignore: deprecated_member_use
+    Scaffold.of(context).showSnackBar(const SnackBar(
+      content: Text("Failed to move note to trash. Please try again"),
+      duration: Duration(seconds: 1),
+    ));
+  }
+}
+
+// Restore note from trash
+Future<void> restoreNoteFromTrash(
+    String? email, String? title, String? content, BuildContext context) async {
+  CollectionReference notes = FirebaseFirestore.instance.collection('users');
+  Future<void> restoreNoteFromTrash() async {
+    // Call the user's CollectionReference to add a new user
+    // Add a document with the title of title
+
+    await notes
         .doc(email)
         .collection('notes')
         .doc(title)
@@ -104,11 +178,29 @@ Future<void> addNote(String? email, String? title, String? content) async {
           'title': title, // John Doe
           'content': content, // Stokes and Sons
         })
-        .then((value) => print("Note Added"))
-        .catchError((error) => print("Failed to add note: $error"));
+        .then((value) => print("Note Added to trash"))
+        .catchError((error) => print("Failed to move note to trash: $error"));
+    // We need to delete the note from the notes list
+
+    return await notes
+        .doc(email)
+        .collection('trash')
+        .doc(title)
+        .delete()
+        .then((value) => print("Note Deleted"))
+        .catchError((error) => print("Failed to delete note: $error"));
   }
 
-  return addNote();
+  try {
+    return restoreNoteFromTrash();
+  } catch (e) {
+    // Show a snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("An error occured. Please try again"),
+      ),
+    );
+  }
 }
 
 // Remove a note from the database

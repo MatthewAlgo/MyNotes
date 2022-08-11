@@ -8,6 +8,7 @@ import 'package:mynotes/views/editnote.dart';
 import 'package:mynotes/views/loginview.dart';
 import 'package:mynotes/views/notesview.dart';
 import 'package:mynotes/views/registerview.dart';
+import 'package:mynotes/views/trashview.dart';
 import 'package:mynotes/views/verifyemailview.dart';
 import 'package:mynotes/views/viewnote.dart';
 import 'firebase_options.dart';
@@ -29,6 +30,7 @@ void main() {
       '/addnote/': (context) => const AddNewNote(),
       '/viewnote/': (context) => const ViewNote(),
       '/editnote/': (context) => const EditNote(),
+      '/trash/': (context) => const TrashView(),
     },
   ));
 }
