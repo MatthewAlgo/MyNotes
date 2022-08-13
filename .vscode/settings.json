@@ -1,6 +1,6 @@
 {
     "cmake.configureOnOpen": false,
-    "java.configuration.updateBuildConfiguration": "false",
+    "java.configuration.updateBuildConfiguration": "automatic",
     "cSpell.words": [
         "usercredential"
     ]

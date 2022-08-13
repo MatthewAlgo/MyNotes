@@ -75,7 +75,7 @@ class _NotesViewState extends State<NotesView> {
                     child: Text(choice),
                     onTap: () {
                       if (choice == 'Logout') {
-                        WidgetsBinding?.instance.addPostFrameCallback((_) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
                           // Show the popup dialog for logout
                           showLogoutDialog(context);
                         });
@@ -86,8 +86,9 @@ class _NotesViewState extends State<NotesView> {
           ),
         ],
       ),
-      body: Center(
-        child: Column(
+      body: Stack(children: <Widget>[
+        
+        Column(
           children: [
             // Get all notes from firebase
             StreamBuilder<QuerySnapshot>(
@@ -108,15 +109,14 @@ class _NotesViewState extends State<NotesView> {
                   );
                 return Expanded(
                   child: ListView(
-                    
                     children:
                         snapshot.data!.docs.map((DocumentSnapshot document) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ListTile(
-                           shape: RoundedRectangleBorder(
+                          shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30)),
-                              tileColor: Color.fromARGB(255, 0, 255, 0),
+                          tileColor: Color.fromARGB(255, 0, 255, 0),
                           title: Text(document['title'],
                               textAlign: TextAlign.center,
                               style: GoogleFonts.sacramento(
@@ -152,9 +152,11 @@ class _NotesViewState extends State<NotesView> {
                                   icon: const Icon(Icons.delete),
                                   onPressed: () {
                                     // Delete the note
-                                    moveNoteToTrash(user.email.toString(),
-                                        document["title"], document["content"], context);
-                                   
+                                    moveNoteToTrash(
+                                        user.email.toString(),
+                                        document["title"],
+                                        document["content"],
+                                        context);
                                   }), // icon-2
                             ],
                           ),
@@ -168,7 +170,7 @@ class _NotesViewState extends State<NotesView> {
             // End of stream builder
           ],
         ),
-      ),
+      ]),
 
       // Drawer for the app
       drawer: getMainDrawer(context, user),
