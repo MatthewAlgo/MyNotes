@@ -24,6 +24,7 @@ class _TrashViewState extends State<TrashView> {
     final user = FirebaseAuth.instance.currentUser;
     // Return a scaffold with the trash view
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 0, 255, 0),
       appBar: AppBar(
         title: Text(
           'Trash',
@@ -127,11 +128,12 @@ class _TrashViewState extends State<TrashView> {
                         child: ListTile(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30)),
-                              tileColor: Color.fromARGB(255, 0, 255, 0),
+                              tileColor: Colors.green,
                           title: Text(document['title'],
                               textAlign: TextAlign.center,
                               style: GoogleFonts.sacramento(
                                 fontSize: 30,
+                                textStyle: const TextStyle(color: Colors.white)
                               )),
                           onTap: () {
                             NoteToBeShown.content = document[

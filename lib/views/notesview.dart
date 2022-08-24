@@ -12,6 +12,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mynotes/views/addnewnote.dart';
 import 'package:mynotes/views/loginview.dart';
+import 'package:mynotes/views/settingsview.dart';
 import 'package:mynotes/views/viewnote.dart';
 
 import '../custom/drawers.dart';
@@ -46,6 +47,7 @@ class _NotesViewState extends State<NotesView> {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 0, 255, 0),
       appBar: AppBar(
         title: Text(
           'MyNotes',
@@ -79,6 +81,11 @@ class _NotesViewState extends State<NotesView> {
                           // Show the popup dialog for logout
                           showLogoutDialog(context);
                         });
+                      } else if (choice == 'Settings') {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          // Show the popup dialog for logout
+                          Navigator.pushNamed(context, '/settings/');
+                        });
                       }
                     });
               }).toList();
@@ -87,7 +94,6 @@ class _NotesViewState extends State<NotesView> {
         ],
       ),
       body: Stack(children: <Widget>[
-        
         Column(
           children: [
             // Get all notes from firebase
@@ -116,12 +122,13 @@ class _NotesViewState extends State<NotesView> {
                         child: ListTile(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30)),
-                          tileColor: Color.fromARGB(255, 0, 255, 0),
+                          tileColor: Colors.green,
                           title: Text(document['title'],
                               textAlign: TextAlign.center,
                               style: GoogleFonts.sacramento(
-                                fontSize: 30,
-                              )),
+                                  fontSize: 30,
+                                  textStyle:
+                                      const TextStyle(color: Colors.white))),
                           onTap: () {
                             NoteToBeShown.content = document[
                                 'content']; // Static variable inside ViewNote

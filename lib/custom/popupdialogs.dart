@@ -105,13 +105,13 @@ void showLogoutDialog(BuildContext context) {
       TextButton(
         onPressed: () async {
           signOut();
-          // Navigator.of(context).pop(); // Close the popup
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const LoginView(),
-            ),
-          );
+          Navigator.of(context).pop(); // Close the popup
+          
+          Navigator.pushReplacementNamed(context, '/login/');
+          // Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginView()));
+          
+          // Navigator.of(context).pushReplacement(
+          //   MaterialPageRoute(builder: (context) => const LoginView()));
         },
         child: const Text('Yes'),
       ),

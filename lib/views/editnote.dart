@@ -46,6 +46,7 @@ class _EditNoteState extends State<EditNote> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 0, 255, 0),
       appBar: AppBar(
           title: Text(
         'Edit Note',

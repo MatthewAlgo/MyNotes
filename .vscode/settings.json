@@ -3,5 +3,6 @@
     "java.configuration.updateBuildConfiguration": "automatic",
     "cSpell.words": [
         "usercredential"
-    ]
+    ],
+    "emulator.emulatorPathLinux": "~/Android/Sdk/emulator"
 }

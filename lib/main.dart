@@ -2,13 +2,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:mynotes/views/authenticationview.dart';
 import 'package:mynotes/views/addnewnote.dart';
 import 'package:mynotes/custom/backgroundvideo.dart';
 import 'package:mynotes/views/editnote.dart';
+import 'package:mynotes/views/loadingview.dart';
 
 import 'package:mynotes/views/loginview.dart';
 import 'package:mynotes/views/notesview.dart';
 import 'package:mynotes/views/registerview.dart';
+import 'package:mynotes/views/settingsview.dart';
 import 'package:mynotes/views/trashview.dart';
 import 'package:mynotes/views/verifyemailview.dart';
 import 'package:mynotes/views/viewnote.dart';
@@ -17,7 +20,6 @@ import 'firebase_options.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
-    title: 'Register',
     theme: ThemeData(
       primarySwatch: Colors.green,
     ),
@@ -31,20 +33,23 @@ void main() {
       '/viewnote/': (context) => const ViewNote(),
       '/editnote/': (context) => const EditNote(),
       '/trash/': (context) => const TrashView(),
+      '/settings/': (context) => const SettingsView(),
+      '/auth/': (context) => const AuthView(),
     },
   ));
 }
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
-
+  static late bool is_auth_enabled = true;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        ),
+        future: FutureBuilderFunctionCall(),
         builder: (context, snapshot) {
+          if (is_auth_enabled) {
+            return const AuthView();
+          }
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               final user = FirebaseAuth.instance.currentUser;
@@ -64,11 +69,23 @@ class HomePage extends StatelessWidget {
                   return const LoginView();
                 }
               }
-              break;
             // return const LoginView();
             default:
-              return const CircularProgressIndicator();
+              return const LoadingView();
           }
         });
   }
+}
+
+Future<FirebaseApp> FutureBuilderFunctionCall() async {
+  if (await SettingsView.getAuthState() != null) {
+    if (SettingsView.getAuthState() == 'true') {
+      HomePage.is_auth_enabled = true;
+    }else if(SettingsView.getAuthState() == 'false'){
+      HomePage.is_auth_enabled = false;
+    }
+  }
+  return Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }

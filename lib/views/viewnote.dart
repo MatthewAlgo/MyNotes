@@ -24,6 +24,7 @@ class _ViewNoteState extends State<ViewNote> {
     // final args = ModalRoute.of(context)!.settings.arguments as NoteToBeShown;
 
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 0, 255, 0),
       appBar: AppBar(
         title: const Text('View Note'),
       ),

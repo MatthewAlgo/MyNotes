@@ -43,6 +43,7 @@ class _AddNewNoteState extends State<AddNewNote> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 0, 255, 0),
       appBar: AppBar(
         title: Text('Add a New Note', style: GoogleFonts.sacramento(
                   fontSize: 30,
