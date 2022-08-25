@@ -41,13 +41,14 @@ void main() {
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
-  static late bool is_auth_enabled = true;
+  static late bool is_auth_enabled = false;
+  static late bool comes_from_auth_view = false;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: FutureBuilderFunctionCall(),
         builder: (context, snapshot) {
-          if (is_auth_enabled) {
+          if (is_auth_enabled && !comes_from_auth_view) {
             return const AuthView();
           }
           switch (snapshot.connectionState) {
@@ -78,10 +79,11 @@ class HomePage extends StatelessWidget {
 }
 
 Future<FirebaseApp> FutureBuilderFunctionCall() async {
-  if (await SettingsView.getAuthState() != null) {
-    if (SettingsView.getAuthState() == 'true') {
+  String localAuthState = await SettingsView.getAuthState() ?? "";
+  if (localAuthState != "") {
+    if (localAuthState == 'true') {
       HomePage.is_auth_enabled = true;
-    }else if(SettingsView.getAuthState() == 'false'){
+    } else if (localAuthState == 'false') {
       HomePage.is_auth_enabled = false;
     }
   }

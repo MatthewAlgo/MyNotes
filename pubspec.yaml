@@ -53,7 +53,12 @@ dependencies:
   local_auth: ^2.1.2
   loading_animation_widget: ^1.2.0
   flutter_secure_storage: ^6.0.0
+  flutter_launcher_icons: ^0.10.0
 
+flutter_icons:
+    image_path: "assets/logo/mipmap-xxxhdpi/ic_launcher.png"
+    android: true
+    ios: true
 
 dev_dependencies:
   flutter_test:
