@@ -15,6 +15,13 @@ void main() {
 class AuthView extends StatefulWidget {
   const AuthView({Key? key}) : super(key: key);
 
+  static Future<bool> authenticateIsAvailable() async {
+    final LocalAuthentication auth = LocalAuthentication();
+    final isAvailable = await auth.canCheckBiometrics;
+    final isDeviceSupported = await auth.isDeviceSupported();
+    return isAvailable && isDeviceSupported;
+  }
+
   @override
   State<AuthView> createState() => _AuthViewState();
 }
@@ -108,6 +115,8 @@ class _AuthViewState extends State<AuthView> {
       }
     });
   }
+
+
 
   Future<void> _authenticateWithBiometrics() async {
     bool authenticated = false;
