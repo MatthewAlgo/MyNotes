@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mynotes/main.dart';
+import 'package:mynotes/views/authenticationview.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({Key? key}) : super(key: key);
@@ -16,6 +17,7 @@ class SettingsView extends StatefulWidget {
     String? value = await _storage.read(key: "localAuth");
     return value;
   }
+
   Future<void> _readAll() async {
     final all = await _storage.readAll();
   }
@@ -37,12 +39,11 @@ class SettingsView extends StatefulWidget {
     // Write value
     return await _storage.write(key: "localAuth", value: value);
   }
-
 }
 
 class _SettingsViewState extends State<SettingsView> {
   static bool _toggled = HomePage.is_auth_enabled; // Sync with home page;
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,14 +66,18 @@ class _SettingsViewState extends State<SettingsView> {
             title: const Text("Enable local authentication"),
             subtitle: const Text("Add additional protection to your data"),
             onChanged: (bool value) async {
-              if (value == true) {
+              if (value == true && await AuthView.authenticateIsAvailable()) {
                 await SettingsView.writeAuthState("true");
               } else {
                 await SettingsView.writeAuthState("false");
               }
-              setState(() {
-                _toggled = value;
-              });
+              if (value == true && !await AuthView.authenticateIsAvailable()) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Auth is not available on this device")));
+              } else {
+                setState(() {
+                  _toggled = value;
+                });
+              }
             },
             value: _toggled,
           ),
@@ -80,7 +85,4 @@ class _SettingsViewState extends State<SettingsView> {
       ),
     );
   }
-
-  
-  
 }
