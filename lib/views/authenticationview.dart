@@ -102,7 +102,7 @@ class _AuthViewState extends State<AuthView> {
     setState(() {
       _authorized = authenticated ? 'Authorized' : 'Not Authorized';
       if (authenticated) {
-        HomePage.is_auth_enabled = false;
+        HomePage.comes_from_auth_view = true;
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const HomePage()));
       }
@@ -154,60 +154,60 @@ class _AuthViewState extends State<AuthView> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        fontFamily: "font", 
-        useMaterial3: true,
-      ),
+        theme: ThemeData(
+          fontFamily: "font",
+          useMaterial3: true,
+        ),
         home: Scaffold(
-      backgroundColor: Colors.green,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text("Waiting for user auth...",
-                  style: GoogleFonts.sacramento(fontSize: 30)),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(24),
-              child: LoadingAnimationWidget.inkDrop(
-                size: 50,
-                color: Colors.red,
-              ),
-            ),
-            Text('Current State: $_authorized\n'),
-            if (_isAuthenticating)
-              ElevatedButton(
-                onPressed: _cancelAuthentication,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const <Widget>[
-                    Text('Cancel Authentication'),
-                    Icon(Icons.cancel),
-                  ],
+          backgroundColor: Colors.green,
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Waiting for user auth...",
+                      style: GoogleFonts.sacramento(fontSize: 30)),
                 ),
-              )
-            else
-              Column(
-                children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: LoadingAnimationWidget.inkDrop(
+                    size: 50,
+                    color: Colors.red,
+                  ),
+                ),
+                Text('Current State: $_authorized\n'),
+                if (_isAuthenticating)
                   ElevatedButton(
-                    onPressed: _authenticate,
+                    onPressed: _cancelAuthentication,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: const <Widget>[
-                        Text('Authenticate'),
-                        Icon(Icons.perm_device_information),
+                        Text('Cancel Authentication'),
+                        Icon(Icons.cancel),
                       ],
                     ),
+                  )
+                else
+                  Column(
+                    children: <Widget>[
+                      ElevatedButton(
+                        onPressed: _authenticate,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: const <Widget>[
+                            Text('Authenticate'),
+                            Icon(Icons.perm_device_information),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-          ],
-        ),
-      ),
-    ));
+              ],
+            ),
+          ),
+        ));
   }
 }
 

@@ -35,17 +35,16 @@ class SettingsView extends StatefulWidget {
 
   static Future<void> writeAuthState(String value) async {
     // Write value
-    await _storage.write(key: "localAuth", value: value);
+    return await _storage.write(key: "localAuth", value: value);
   }
 
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  static bool _toggled = true;
+  static bool _toggled = HomePage.is_auth_enabled; // Sync with home page;
   
   @override
   Widget build(BuildContext context) {
-    _toggled = HomePage.is_auth_enabled; // Sync with home page
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 0, 255, 0),
       appBar: AppBar(
@@ -67,9 +66,9 @@ class _SettingsViewState extends State<SettingsView> {
             subtitle: const Text("Add additional protection to your data"),
             onChanged: (bool value) async {
               if (value == true) {
-                SettingsView.writeAuthState("true");
+                await SettingsView.writeAuthState("true");
               } else {
-                SettingsView.writeAuthState("false");
+                await SettingsView.writeAuthState("false");
               }
               setState(() {
                 _toggled = value;

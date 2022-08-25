@@ -10,6 +10,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mynotes/main.dart';
 import 'package:mynotes/views/addnewnote.dart';
 import 'package:mynotes/views/loginview.dart';
 import 'package:mynotes/views/settingsview.dart';
@@ -45,6 +46,7 @@ class _NotesViewState extends State<NotesView> {
 
   @override
   Widget build(BuildContext context) {
+    HomePage.comes_from_auth_view = false;
     final user = FirebaseAuth.instance.currentUser;
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 0, 255, 0),
