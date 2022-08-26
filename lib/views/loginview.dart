@@ -127,7 +127,6 @@ class _LoginViewState extends State<LoginView> {
                                           email: email,
                                           password: password,
                                         );
-                                        print(usercredential.user);
                                         // We update the database so that the user is logged in
                                         updateUser(
                                             usercredential.user?.email,
