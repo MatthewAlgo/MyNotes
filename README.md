@@ -1,4 +1,4 @@
-# simplenotes
+# SimpleNotes
 
 A new Flutter project.
 
