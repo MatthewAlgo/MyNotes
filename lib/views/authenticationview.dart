@@ -86,7 +86,7 @@ class _AuthViewState extends State<AuthView> {
         _authorized = 'Authenticating';
       });
       authenticated = await auth.authenticate(
-        localizedReason: 'Authenticate to MyNotes',
+        localizedReason: 'Authenticate to simplenotes',
         options: const AuthenticationOptions(
           stickyAuth: true,
         ),
@@ -115,8 +115,6 @@ class _AuthViewState extends State<AuthView> {
       }
     });
   }
-
-
 
   Future<void> _authenticateWithBiometrics() async {
     bool authenticated = false;
@@ -168,7 +166,7 @@ class _AuthViewState extends State<AuthView> {
           useMaterial3: true,
         ),
         home: Scaffold(
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.lightBlue,
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

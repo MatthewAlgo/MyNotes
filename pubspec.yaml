@@ -1,4 +1,4 @@
-name: mynotes
+name: simplenotes
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -34,10 +34,10 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  firebase_core: ^1.20.0
-  firebase_auth: ^3.6.2
-  cloud_firestore: ^3.4.3
-  firebase_analytics: ^9.3.0
+  firebase_core: ^2.3.0
+  firebase_auth: ^4.1.4
+  cloud_firestore: ^4.1.0
+  firebase_analytics: ^10.0.6
   firebase_storage: any
 
   youtube_player_flutter: any
@@ -53,11 +53,11 @@ dependencies:
   local_auth: ^2.1.2
   loading_animation_widget: ^1.2.0
   flutter_secure_storage: ^6.0.0
-  flutter_launcher_icons: ^0.10.0
+  flutter_launcher_icons: ^0.11.0
 
   # encryption
-  pointycastle: ^1.0.0
-  asn1lib: ^0.5.3
+  pointycastle: ^3.6.2
+  asn1lib: ^1.4.0
 
 
 flutter_icons:
@@ -88,8 +88,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-    - assets/sticky_notes.mp4
+  # assets:
+  #   - assets/sticky_notes.mp4
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

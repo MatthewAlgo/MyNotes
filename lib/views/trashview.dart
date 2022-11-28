@@ -5,11 +5,11 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mynotes/net/firebase.dart';
-import 'package:mynotes/views/viewnote.dart';
+import 'package:simplenotes/net/Firebase.dart';
+import 'package:simplenotes/views/viewnote.dart';
 
-import '../custom/drawers.dart';
-import '../custom/popupdialogs.dart';
+import '../custom/Drawers.dart';
+import '../custom/PopupDialogs.dart';
 
 class TrashView extends StatefulWidget {
   const TrashView({Key? key}) : super(key: key);
@@ -24,7 +24,7 @@ class _TrashViewState extends State<TrashView> {
     final user = FirebaseAuth.instance.currentUser;
     // Return a scaffold with the trash view
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 255, 0),
+      backgroundColor: Color.fromARGB(255, 52, 207, 213),
       appBar: AppBar(
         title: Text(
           'Trash',
@@ -47,8 +47,7 @@ class _TrashViewState extends State<TrashView> {
                     child: Text(choice),
                     onTap: () {
                       if (choice == 'Empty Trash') {
-                        WidgetsBinding?.instance
-                            .addPostFrameCallback((_) async {
+                        WidgetsBinding.instance.addPostFrameCallback((_) async {
                           // Show the popup dialog for logout
                           final user = FirebaseAuth.instance.currentUser;
                           CollectionReference notes =
@@ -72,7 +71,6 @@ class _TrashViewState extends State<TrashView> {
                                   TextButton(
                                     child: const Text('Empty'),
                                     onPressed: () {
-                                      
                                       // Delete all notes
                                       notes
                                           .doc(user?.email)
@@ -128,23 +126,19 @@ class _TrashViewState extends State<TrashView> {
                         child: ListTile(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30)),
-                              tileColor: Colors.green,
+                          tileColor: Colors.lightBlue,
                           title: Text(document['title'],
                               textAlign: TextAlign.center,
                               style: GoogleFonts.sacramento(
-                                fontSize: 30,
-                                textStyle: const TextStyle(color: Colors.white)
-                              )),
+                                  fontSize: 30,
+                                  textStyle:
+                                      const TextStyle(color: Colors.white))),
                           onTap: () {
                             NoteToBeShown.content = document[
                                 'content']; // Static variable inside ViewNote
                             NoteToBeShown.title = document['title'];
                             Navigator.pushNamed(context, '/viewnote/');
                           },
-                          // subtitle: Text(document['content'],textAlign: TextAlign.center,
-                          //     style: GoogleFonts.sacramento(
-                          //       fontSize: 20,
-                          //     )),
                           trailing: Wrap(
                             spacing: 12, // space between two icons
                             children: <IconButton>[

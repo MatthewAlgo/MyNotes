@@ -3,8 +3,8 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mynotes/main.dart';
-import 'package:mynotes/views/authenticationview.dart';
+import 'package:simplenotes/main.dart';
+import 'package:simplenotes/views/AuthenticationView.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({Key? key}) : super(key: key);
@@ -47,7 +47,7 @@ class _SettingsViewState extends State<SettingsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 255, 0),
+      backgroundColor: const Color.fromARGB(255, 163, 217, 237),
       appBar: AppBar(
         title: Text(
           'Settings',
@@ -72,7 +72,8 @@ class _SettingsViewState extends State<SettingsView> {
                 await SettingsView.writeAuthState("false");
               }
               if (value == true && !await AuthView.authenticateIsAvailable()) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Auth is not available on this device")));
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("Auth is not available on this device")));
               } else {
                 setState(() {
                   _toggled = value;

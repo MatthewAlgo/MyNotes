@@ -2,14 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mynotes/main.dart';
-import 'package:mynotes/net/firebase.dart';
-import 'package:mynotes/custom/backgroundvideo.dart';
-import 'package:mynotes/views/registerview.dart';
+import 'package:simplenotes/main.dart';
+import 'package:simplenotes/net/Firebase.dart';
+import 'package:simplenotes/custom/BackgroundVideo.dart';
+import 'package:simplenotes/views/registerview.dart';
 import 'package:video_player/video_player.dart';
 
 import '../firebase_options.dart';
-import '../custom/textfields.dart';
+import '../custom/Textfields.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -41,7 +41,7 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Login - MyNotes',
+          'Login - simplenotes',
           style: GoogleFonts.sacramento(
             fontSize: 20,
             fontWeight: FontWeight.w700,
@@ -51,7 +51,26 @@ class _LoginViewState extends State<LoginView> {
       ),
       body: Stack(
         children: <Widget>[
-          VideoWidget(),
+          Container(
+            // Add box decoration
+            decoration: BoxDecoration(
+              // Box decoration takes a gradient
+              gradient: LinearGradient(
+                // Where the linear gradient begins and ends
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                // Add one stop for each color. Stops should increase from 0 to 1
+                stops: [0.1, 0.5, 0.7, 0.9],
+                colors: [
+                  // Colors are easy thanks to Flutter's Colors class.
+                  Color.fromARGB(255, 254, 34, 34),
+                  Color.fromARGB(255, 243, 127, 125),
+                  Color.fromARGB(255, 255, 80, 80),
+                  Color.fromARGB(255, 242, 243, 250),
+                ],
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(
@@ -121,9 +140,9 @@ class _LoginViewState extends State<LoginView> {
                                       final email = _email.text;
                                       final password = _password.text;
                                       try {
-                                        final usercredential = await FirebaseAuth
-                                            .instance
-                                            .signInWithEmailAndPassword(
+                                        final usercredential =
+                                            await FirebaseAuth.instance
+                                                .signInWithEmailAndPassword(
                                           email: email,
                                           password: password,
                                         );
@@ -132,22 +151,24 @@ class _LoginViewState extends State<LoginView> {
                                             usercredential.user?.email,
                                             usercredential.user?.uid,
                                             usercredential.user?.emailVerified);
-                            
+
                                         // ignore: use_build_context_synchronously
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => const HomePage(),
+                                            builder: (context) =>
+                                                const HomePage(),
                                           ),
                                         );
-                                        // TODO: A more ellegant sollution 
+                                        // TODO: A more ellegant sollution
                                         // Navigator.of(context).pushReplacement(
                                         //     MaterialPageRoute(builder: (context) => const HomePage()));
                                       } on FirebaseAuthException catch (e) {
                                         if (e.code == 'user-not-found') {
                                           // Show a snackbar with the error message
                                           // ignore: deprecated_member_use
-                                          ScaffoldMessenger.of(context).showSnackBar(
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
                                             const SnackBar(
                                               content: Text("User not found"),
                                             ),
@@ -155,16 +176,18 @@ class _LoginViewState extends State<LoginView> {
                                         } else if (e.code == 'wrong-password') {
                                           // Show a snackbar with the error message
                                           // ignore: deprecated_member_use
-                                          ScaffoldMessenger.of(context).showSnackBar(
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
                                             const SnackBar(
-                                              content:
-                                                  Text("Wrong password, try again"),
+                                              content: Text(
+                                                  "Wrong password, try again"),
                                             ),
                                           );
                                         } else {
                                           // Show a snackbar with the error message
                                           // ignore: deprecated_member_use
-                                          ScaffoldMessenger.of(context).showSnackBar(
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
                                             const SnackBar(
                                               content: Text("Error signing in"),
                                             ),
@@ -185,8 +208,9 @@ class _LoginViewState extends State<LoginView> {
                                 ),
                                 child: TextButton(
                                     onPressed: () {
-                                      Navigator.of(context).pushNamedAndRemoveUntil(
-                                          '/register/', (route) => false);
+                                      Navigator.of(context)
+                                          .pushNamedAndRemoveUntil(
+                                              '/register/', (route) => false);
                                     },
                                     child: const Text(
                                         "Not registered yet? Register here")),

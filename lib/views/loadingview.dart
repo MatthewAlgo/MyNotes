@@ -15,8 +15,8 @@ class _LoadingViewState extends State<LoadingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
-      body: Container(  
+      backgroundColor: Colors.lightBlue,
+      body: Container(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -24,7 +24,8 @@ class _LoadingViewState extends State<LoadingView> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text("Loading...", style: GoogleFonts.sacramento(fontSize: 30)),
+                child: Text("Loading...",
+                    style: GoogleFonts.sacramento(fontSize: 30)),
               ),
               Padding(
                 padding: const EdgeInsets.all(24),

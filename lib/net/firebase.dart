@@ -144,9 +144,9 @@ Future<void> moveNoteToTrash(
         .doc(title)
         .delete()
         .then((value) => // Show a snackbar
-            Scaffold.of(context).showSnackBar(SnackBar(
-              content: Text("Note moved to trash"),
-            )))
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Note moved to trash"),
+    )))
         .catchError((error) => print("Failed to delete note: $error"));
   }
 
@@ -155,9 +155,9 @@ Future<void> moveNoteToTrash(
   } catch (e) {
     // Show a snackbar
     // ignore: deprecated_member_use
-    Scaffold.of(context).showSnackBar(const SnackBar(
+    // Show a snackbar
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Failed to move note to trash. Please try again"),
-      duration: Duration(seconds: 1),
     ));
   }
 }

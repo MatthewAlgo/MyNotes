@@ -5,20 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "mynotes",
+            "name": "simplenotes",
             "request": "launch",
             "type": "dart",
             "args": ["--no-sound-null-safety"]
         },
         {
-            "name": "mynotes (profile mode)",
+            "name": "simplenotes (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile",
             "args": ["--no-sound-null-safety"]
         },
         {
-            "name": "mynotes (release mode)",
+            "name": "simplenotes (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release",

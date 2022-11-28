@@ -2,14 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mynotes/crypto/cryptofuncs.dart';
-import 'package:mynotes/custom/backgroundvideo.dart';
-import 'package:mynotes/views/loginview.dart';
+import 'package:simplenotes/custom/BackgroundVideo.dart';
+import 'package:simplenotes/views/loginview.dart';
 import 'package:pointycastle/pointycastle.dart';
 
-import '../custom/textfields.dart';
+import '../custom/Textfields.dart';
 import '../firebase_options.dart';
-import '../net/firebase.dart';
+import '../net/Firebase.dart';
 
 import 'package:flutter/src/widgets/basic.dart' as BasicPkg;
 
@@ -43,7 +42,7 @@ class _RegisterViewState extends State<RegisterView> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Register - MyNotes',
+            'Register - simplenotes',
             style: GoogleFonts.sacramento(
               fontSize: 20,
               fontWeight: FontWeight.w700,
@@ -53,7 +52,28 @@ class _RegisterViewState extends State<RegisterView> {
         ),
         body: Stack(
           children: <Widget>[
-            VideoWidget(),
+            // A colorful background
+            Container(
+              // Add box decoration
+              decoration: BoxDecoration(
+                // Box decoration takes a gradient
+                gradient: LinearGradient(
+                  // Where the linear gradient begins and ends
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  // Add one stop for each color. Stops should increase from 0 to 1
+                  stops: [0.1, 0.5, 0.7, 0.9],
+                  colors: [
+                    // Colors are easy thanks to Flutter's Colors class.
+                    Color.fromARGB(255, 49, 63, 169),
+                    Color.fromARGB(255, 109, 126, 237),
+                    Color.fromARGB(255, 184, 194, 255),
+                    Color.fromARGB(255, 242, 243, 250),
+                  ],
+                ),
+              ),
+            ),
+
             BasicPkg.Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
@@ -127,15 +147,12 @@ class _RegisterViewState extends State<RegisterView> {
                                           email: email, password: password);
                                   print(userCredential);
 
-                                  // TODO: Generate private / public key pair to encrypt user data
-
                                   final addToDatabase = await AddUserToDatabase(
                                       userCredential.user?.email,
                                       userCredential.user?.uid,
                                       userCredential.user?.emailVerified);
                                   final listUsers = await getData();
 
-                                
                                   // ignore: use_build_context_synchronously
                                   Navigator.push(
                                       context,
@@ -210,14 +227,4 @@ void showMessage(BuildContext context, String message) {
       content: Text(message),
     ),
   );
-}
-
-void generateKeyPair() async {
-  // Generates key pair
-  final keypair =
-      await CryptoLocal.getRSAKeyPair(CryptoLocal.exampleSecureRandom());
-  final myPublic = keypair.publicKey as RSAPublicKey;
-  final myPrivate = keypair.privateKey as RSAPrivateKey;
-
-  // We need to make use of those keys
 }

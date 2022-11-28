@@ -60,6 +60,7 @@ void showTrashPopup(BuildContext context, User? usercredential, String title) {
       ),
       TextButton(
         onPressed: () async {
+          Navigator.of(context).pop(); // Close the popup
           CollectionReference notes = FirebaseFirestore.instance.collection('users');
           // Show an information dialog
           await notes
@@ -70,10 +71,6 @@ void showTrashPopup(BuildContext context, User? usercredential, String title) {
               // ignore: avoid_print
               .then((value) => print('Deleted'))
               .catchError((error) => print(error));
-          // ignore: use_build_context_synchronously
-          Navigator.of(context).pop(); // Close the popup
-          // Create a snackbar to inform the user that the email is sent
-          // ignore: deprecated_member_use, use_build_context_synchronously
         },
         child: const Text('Yes'),
       ),

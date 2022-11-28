@@ -10,15 +10,15 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mynotes/main.dart';
-import 'package:mynotes/views/addnewnote.dart';
-import 'package:mynotes/views/loginview.dart';
-import 'package:mynotes/views/settingsview.dart';
-import 'package:mynotes/views/viewnote.dart';
+import 'package:simplenotes/main.dart';
+import 'package:simplenotes/views/AddNewNote.dart';
+import 'package:simplenotes/views/LoginView.dart';
+import 'package:simplenotes/views/settingsview.dart';
+import 'package:simplenotes/views/viewnote.dart';
 
-import '../custom/drawers.dart';
-import '../custom/popupdialogs.dart';
-import '../net/firebase.dart';
+import '../custom/Drawers.dart';
+import '../custom/PopupDialogs.dart';
+import '../net/Firebase.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({Key? key}) : super(key: key);
@@ -49,10 +49,10 @@ class _NotesViewState extends State<NotesView> {
     HomePage.comes_from_auth_view = false;
     final user = FirebaseAuth.instance.currentUser;
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 0, 255, 0),
+      backgroundColor: Color.fromARGB(255, 163, 217, 237),
       appBar: AppBar(
         title: Text(
-          'MyNotes',
+          'simplenotes',
           // Apply google fonts
           style: GoogleFonts.sacramento(
             fontSize: 30,
@@ -124,7 +124,7 @@ class _NotesViewState extends State<NotesView> {
                         child: ListTile(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30)),
-                          tileColor: Colors.green,
+                          tileColor: Colors.lightBlue,
                           title: Text(document['title'],
                               textAlign: TextAlign.center,
                               style: GoogleFonts.sacramento(

@@ -5,10 +5,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mynotes/custom/textfields.dart';
-import 'package:mynotes/views/viewnote.dart';
+import 'package:simplenotes/custom/Textfields.dart';
+import 'package:simplenotes/views/viewnote.dart';
 
-import '../net/firebase.dart';
+import '../net/Firebase.dart';
 
 // ignore: must_be_immutable
 class EditNote extends StatefulWidget {
@@ -46,7 +46,7 @@ class _EditNoteState extends State<EditNote> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 255, 0),
+      backgroundColor: const Color.fromARGB(255, 52, 207, 213),
       appBar: AppBar(
           title: Text(
         'Edit Note',
@@ -93,7 +93,7 @@ class _EditNoteState extends State<EditNote> {
                   ),
                 )),
 
-            RaisedButton(
+            TextButton(
               child: const Text('Save'),
               onPressed: () {
                 final user = FirebaseAuth.instance.currentUser;
@@ -110,7 +110,8 @@ class _EditNoteState extends State<EditNote> {
                   title: _title.text,
                   content: _content.text,
                 );
-                addNote(user.email.toString(), note.title, note.content, context);
+                addNote(
+                    user.email.toString(), note.title, note.content, context);
 
                 // Save the modified note to the database
                 Navigator.pop(context);

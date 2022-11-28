@@ -5,7 +5,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../net/firebase.dart';
+import '../net/Firebase.dart';
 
 // ignore: must_be_immutable
 class AddNewNote extends StatefulWidget {
@@ -43,7 +43,7 @@ class _AddNewNoteState extends State<AddNewNote> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 0, 255, 0),
+      backgroundColor: Color.fromARGB(255, 52, 207, 213),
       appBar: AppBar(
         title: Text('Add a New Note', style: GoogleFonts.sacramento(
                   fontSize: 30,

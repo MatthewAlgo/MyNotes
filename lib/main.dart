@@ -2,26 +2,26 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:mynotes/views/authenticationview.dart';
-import 'package:mynotes/views/addnewnote.dart';
-import 'package:mynotes/custom/backgroundvideo.dart';
-import 'package:mynotes/views/editnote.dart';
-import 'package:mynotes/views/loadingview.dart';
+import 'package:simplenotes/views/AuthenticationView.dart';
+import 'package:simplenotes/views/AddNewNote.dart';
+import 'package:simplenotes/custom/BackgroundVideo.dart';
+import 'package:simplenotes/views/EditNote.dart';
+import 'package:simplenotes/views/LoadingView.dart';
 
-import 'package:mynotes/views/loginview.dart';
-import 'package:mynotes/views/notesview.dart';
-import 'package:mynotes/views/registerview.dart';
-import 'package:mynotes/views/settingsview.dart';
-import 'package:mynotes/views/trashview.dart';
-import 'package:mynotes/views/verifyemailview.dart';
-import 'package:mynotes/views/viewnote.dart';
+import 'package:simplenotes/views/LoginView.dart';
+import 'package:simplenotes/views/notesview.dart';
+import 'package:simplenotes/views/RegisterView.dart';
+import 'package:simplenotes/views/settingsview.dart';
+import 'package:simplenotes/views/TrashView.dart';
+import 'package:simplenotes/views/VerifyEmailView.dart';
+import 'package:simplenotes/views/viewnote.dart';
 import 'firebase_options.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
     theme: ThemeData(
-      primarySwatch: Colors.green,
+      primarySwatch: Colors.lightBlue,
     ),
     home: const HomePage(),
     routes: {
