@@ -86,7 +86,7 @@ class _AuthViewState extends State<AuthView> {
         _authorized = 'Authenticating';
       });
       authenticated = await auth.authenticate(
-        localizedReason: 'Authenticate to simplenotes',
+        localizedReason: 'Authenticate to SimpleNotes',
         options: const AuthenticationOptions(
           stickyAuth: true,
         ),

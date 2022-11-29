@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:simplenotes/splash/splashscreen.dart';
 import 'package:simplenotes/views/AuthenticationView.dart';
 import 'package:simplenotes/views/AddNewNote.dart';
 import 'package:simplenotes/custom/BackgroundVideo.dart';
@@ -23,7 +24,7 @@ void main() {
     theme: ThemeData(
       primarySwatch: Colors.lightBlue,
     ),
-    home: const HomePage(),
+    home: const Splash(),
     routes: {
       '/login/': (context) => const LoginView(),
       '/register/': (context) => const RegisterView(),
@@ -35,6 +36,7 @@ void main() {
       '/trash/': (context) => const TrashView(),
       '/settings/': (context) => const SettingsView(),
       '/auth/': (context) => const AuthView(),
+      '/splash/': (context) => const Splash(),
     },
   ));
 }
@@ -56,14 +58,9 @@ class HomePage extends StatelessWidget {
               final user = FirebaseAuth.instance.currentUser;
 
               if (user?.emailVerified == true) {
-                print('You are a verified user');
-
-                // Display app contents here
                 return const NotesView();
               } else {
                 if (user != null) {
-                  print('You are not a verified user');
-
                   // Display verification page here
                   return const VerifyEmailView();
                 } else {

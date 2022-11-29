@@ -42,7 +42,7 @@ class _RegisterViewState extends State<RegisterView> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            'Register - simplenotes',
+            'Register - SimpleNotes',
             style: GoogleFonts.sacramento(
               fontSize: 20,
               fontWeight: FontWeight.w700,

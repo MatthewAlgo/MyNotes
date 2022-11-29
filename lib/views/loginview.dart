@@ -41,7 +41,7 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Login - simplenotes',
+          'Login - SimpleNotes',
           style: GoogleFonts.sacramento(
             fontSize: 20,
             fontWeight: FontWeight.w700,

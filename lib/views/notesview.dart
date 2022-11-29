@@ -52,7 +52,7 @@ class _NotesViewState extends State<NotesView> {
       backgroundColor: Color.fromARGB(255, 163, 217, 237),
       appBar: AppBar(
         title: Text(
-          'simplenotes',
+          'SimpleNotes',
           // Apply google fonts
           style: GoogleFonts.sacramento(
             fontSize: 30,
